@@ -1,1 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Null_X</title>
+    <style>
+        /* General styling and background */
+        body {
+            /* --- ADD YOUR BACKGROUND HERE --- */
+            background-image: url('YOUR_BACKGROUND_LINK_OR_FILE_HERE.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #121212; 
+            
+            color: #e0e0e0;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
 
+        /* Wrapper to keep all the boxes aligned */
+        .layout-wrapper {
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 30px; 
+        }
+
+        /* The modular box style with the RGB border */
+        .rgb-box {
+            background-color: rgba(30, 30, 30, 0.85); 
+            backdrop-filter: blur(5px);
+            padding: 30px;
+            border-radius: 8px;
+            border: 4px solid #ff0000;
+            box-sizing: border-box;
+            
+            animation: rgb-glow 6s linear infinite;
+        }
+
+        /* The RGB Animation */
+        @keyframes rgb-glow {
+            0% { border-color: rgb(255, 0, 0); box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); }
+            33% { border-color: rgb(0, 255, 0); box-shadow: 0 0 20px rgba(0, 255, 0, 0.6); }
+            66% { border-color: rgb(0, 150, 255); box-shadow: 0 0 20px rgba(0, 150, 255, 0.6); }
+            100% { border-color: rgb(255, 0, 0); box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); }
+        }
+
+        /* Header and Navigation */
+        header { text-align: center; }
+        h1 { font-size: 2.5rem; margin: 0 0 15px 0; letter-spacing: 2px; }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav a {
+            color: #00ffcc;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        /* Typography */
+        h2 {
+            color: #fff;
+            border-left: 4px solid #555;
+            padding-left: 10px;
+            margin-top: 0;
+        }
+
+        p { line-height: 1.6; margin-bottom: 10px; }
+        ul { margin-bottom: 0; line-height: 1.6; }
+
+        /* Button Styling */
+        button {
+            background-color: #00ffcc;
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: inherit;
+            border-radius: 4px;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover { background-color: #00ccaa; }
+
+    </style>
+</head>
+<body>
+
+    <div class="layout-wrapper">
+        <header class="rgb-box">
+            <h1>Null_X</h1>
+            <nav>
+                <a href="#about">About Us</a>
+                <a href="#what-we-do">What We Do</a>
+                <a href="#cloak-module">Cloak Module</a>
+                <a href="#contact">Contact the Owner</a>
+            </nav>
+        </header>
+
+        <section id="about" class="rgb-box">
+            <h2>About Us</h2>
+            <p>Welcome to Null_X. We are an organization built on the idea of pushing boundaries and exploring the unknown limits of technology and digital experiences.</p>
+        </section>
+
+        <section id="what-we-do" class="rgb-box">
+            <h2>What We Do</h2>
+            <p>At Null_X, we specialize in building innovative and discrete digital solutions.</p>
+            <ul>
+                <li><strong>Game Development:</strong> Crafting immersive and engaging gaming experiences.</li>
+                <li><strong>Web Design:</strong> Creating custom, secure, and aesthetic websites upon request.</li>
+                <li><strong>Experimental Cloaks:</strong> Developing methods to mask digital footprints and disguise web traffic.</li>
+            </ul>
+        </section>
+
+        <section id="cloak-module" class="rgb-box">
+            <h2>Experimental Cloaks</h2>
+            <p>Deploy our about:blank cloaking technology. This will open a new, disguised tab masking as Google Drive.</p>
+            <button onclick="launchCloak()">Launch Cloak</button>
+        </section>
+
+        <section id="contact" class="rgb-box">
+            <h2>Contact the Owner</h2>
+            <p>blank</p>
+        </section>
+    </div>
+
+    <script>
+        // --- CUSTOM SLOW SMOOTH SCROLLING ---
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (!targetElement) return;
+
+                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                const startPosition = window.pageYOffset;
+                const distance = targetPosition - startPosition;
+                
+                // Change this number to make it faster or slower (1500 = 1.5 seconds)
+                const duration = 1500; 
+                let start = null;
+
+                window.requestAnimationFrame(function step(timestamp) {
+                    if (!start) start = timestamp;
+                    const progress = timestamp - start;
+                    const percent = Math.min(progress / duration, 1);
+                    
+                    // Easing function for a smooth glide
+                    const ease = percent < 0.5 ? 2 * percent * percent : 1 - Math.pow(-2 * percent + 2, 2) / 2;
+                    
+                    window.scrollTo(0, startPosition + distance * ease);
+                    if (progress < duration) window.requestAnimationFrame(step);
+                });
+            });
+        });
+
+        // --- CLOAK LAUNCHER ---
+        function launchCloak() {
+            // Open an about:blank tab
+            let win = window.open('about:blank', '_blank');
+            if (!win) {
+                alert("Pop-up blocked! Please allow pop-ups for this site to use the cloak.");
+                return;
+            }
+            
+            let doc = win.document;
+            
+            // Set the disguised title
+            doc.title = "Google Drive";
+            
+            // Set the disguised favicon (Google Drive logo)
+            let link = doc.createElement('link');
+            link.rel = 'icon';
+            link.href = 'https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png';
+            doc.head.appendChild(link);
+            
+            // Create the iframe to load the content
+            let iframe = doc.createElement('iframe');
+            
+            // NOTE: Google Drive blocks being embedded, so it may show an error. 
+            // You can replace this URL with your own game link or site later.
+            iframe.src = 'https://drive.google.com'; 
+            
+            // Make the iframe take up the whole screen seamlessly
+            iframe.style.width = '100vw';
+            iframe.style.height = '100vh';
+            iframe.style.border = 'none';
+            iframe.style.margin = '0';
+            iframe.style.padding = '0';
+            
+            // Remove margins from the new tab's body
+            doc.body.style.margin = '0';
+            doc.body.style.overflow = 'hidden'; 
+            
+            // Inject the iframe into the disguised tab
+            doc.body.appendChild(iframe);
+        }
+    </script>
+</body>
+</html>
