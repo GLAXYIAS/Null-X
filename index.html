@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Null_X</title>
-    <link id="dynamic-favicon" rel="icon" type="image/png" href="">
     <style>
         /* General styling and background */
         body {
@@ -26,7 +25,7 @@
 
         /* Wrapper to keep all the boxes aligned */
         .layout-wrapper {
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -55,13 +54,14 @@
 
         /* Header and Navigation */
         header { text-align: center; }
-        h1 { font-size: 2.5rem; margin: 0 0 15px 0; letter-spacing: 2px; }
+        h1 { font-size: 2.5rem; margin: 0 0 15px 0; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
         
         nav {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 15px;
+            line-height: 2;
         }
 
         nav a {
@@ -69,11 +69,13 @@
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s ease;
+            padding: 0 5px;
         }
 
         nav a:hover {
             color: #ffffff;
             text-decoration: underline;
+            text-shadow: 0 0 8px #00ffcc;
         }
 
         /* Typography */
@@ -87,6 +89,20 @@
         p { line-height: 1.6; margin-bottom: 10px; }
         ul { margin-bottom: 0; line-height: 1.6; }
 
+        /* Form / Input Styling */
+        select {
+            background-color: #2a2a2a;
+            color: #fff;
+            border: 1px solid #555;
+            padding: 10px;
+            font-family: inherit;
+            border-radius: 4px;
+            margin-top: 10px;
+            width: 100%;
+            max-width: 300px;
+            display: block;
+        }
+
         /* Button Styling */
         button {
             background-color: #00ffcc;
@@ -98,10 +114,11 @@
             font-family: inherit;
             border-radius: 4px;
             margin-top: 15px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.1s;
         }
 
         button:hover { background-color: #00ccaa; }
+        button:active { transform: scale(0.98); }
 
     </style>
 </head>
@@ -112,8 +129,12 @@
             <h1>Null_X</h1>
             <nav>
                 <a href="#about">About Us</a>
+                <a href="#mission">Our Mission</a>
                 <a href="#what-we-do">What We Do</a>
+                <a href="#games">Games</a>
+                <a href="#web-dev">Web Design</a>
                 <a href="#cloak-module">Cloak Module</a>
+                <a href="#team">The Team</a>
                 <a href="#contact">Contact the Owner</a>
             </nav>
         </header>
@@ -123,20 +144,46 @@
             <p>Welcome to Null_X. We are an organization built on the idea of pushing boundaries and exploring the unknown limits of technology and digital experiences.</p>
         </section>
 
+        <section id="mission" class="rgb-box">
+            <h2>Our Mission</h2>
+            <p>To provide unfiltered access to next-generation tools, immersive gaming environments, and secure operational setups for those who require them.</p>
+        </section>
+
         <section id="what-we-do" class="rgb-box">
             <h2>What We Do</h2>
-            <p>At Null_X, we specialize in building innovative and discrete digital solutions.</p>
-            <ul>
-                <li><strong>Game Development:</strong> Crafting immersive and engaging gaming experiences.</li>
-                <li><strong>Web Design:</strong> Creating custom, secure, and aesthetic websites upon request.</li>
-                <li><strong>Experimental Cloaks:</strong> Developing methods to mask digital footprints and disguise web traffic.</li>
-            </ul>
+            <p>Null_X specializes in building innovative and discrete digital solutions, acting as the bridge between raw ideas and executed systems.</p>
+        </section>
+
+        <section id="games" class="rgb-box">
+            <h2>Games</h2>
+            <p>We craft immersive and engaging gaming experiences. Stay tuned for our upcoming library of custom-built interactive titles.</p>
+        </section>
+
+        <section id="web-dev" class="rgb-box">
+            <h2>Web Design</h2>
+            <p>We create custom, secure, and aesthetic websites upon request. Whether you need a simple landing page or a complex, dark-web inspired network infrastructure, we can build it.</p>
         </section>
 
         <section id="cloak-module" class="rgb-box">
             <h2>Experimental Cloaks</h2>
-            <p>Deploy our masking technology. This will instantly change the current tab's title and icon to disguise it as Google Drive.</p>
+            <p>Deploy our about:blank cloaking technology. Select a disguise below and launch the cloak to open Null_X safely in a new masked tab.</p>
+            
+            <label for="cloak-select" style="font-weight: bold; color: #aaa;">Select Disguise:</label>
+            <select id="cloak-select">
+                <option value="drive">Google Drive</option>
+                <option value="classroom">Google Classroom</option>
+                <option value="canvas">Canvas</option>
+                <option value="canva">Canva</option>
+                <option value="newtab">New Tab</option>
+                <option value="microsoft">Microsoft 365</option>
+            </select>
+
             <button onclick="launchCloak()">Launch Cloak</button>
+        </section>
+
+        <section id="team" class="rgb-box">
+            <h2>The Team</h2>
+            <p>A collective of developers, designers, and network architects operating under the Null_X banner.</p>
         </section>
 
         <section id="contact" class="rgb-box">
@@ -159,7 +206,6 @@
                 const startPosition = window.pageYOffset;
                 const distance = targetPosition - startPosition;
                 
-                // Change this number to make it faster or slower (1500 = 1.5 seconds)
                 const duration = 1500; 
                 let start = null;
 
@@ -176,16 +222,50 @@
             });
         });
 
-        // --- IN-TAB CLOAK LAUNCHER ---
+        // --- NEW TAB ABOUT:BLANK CLOAK LAUNCHER ---
         function launchCloak() {
-            // Change the tab title
-            document.title = "Google Drive";
-            
-            // Swap the favicon to the Google Drive icon
-            let favicon = document.getElementById("dynamic-favicon");
-            if (favicon) {
-                favicon.href = "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
+            // Dictionary of disguise settings
+            const cloaks = {
+                drive: { title: "My Drive - Google Drive", icon: "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png" },
+                classroom: { title: "Classes", icon: "https://ssl.gstatic.com/classroom/favicon.png" },
+                canvas: { title: "Dashboard", icon: "https://du11hjcvx0uqb.cloudfront.net/br/dist/images/favicon-e10d657a73.ico" },
+                canva: { title: "Home - Canva", icon: "https://www.canva.com/favicon.ico" },
+                newtab: { title: "New Tab", icon: "https://www.google.com/favicon.ico" },
+                microsoft: { title: "Microsoft 365", icon: "https://c.s-microsoft.com/favicon.ico?v2" }
+            };
+
+            // Get selected disguise
+            const selection = document.getElementById("cloak-select").value;
+            const cloakData = cloaks[selection];
+
+            // Open the new tab
+            let win = window.open('about:blank', '_blank');
+            if (!win) {
+                alert("Pop-up blocked! Please allow pop-ups for this site to use the cloak.");
+                return;
             }
+            
+            let doc = win.document;
+            
+            // Set the disguised title and favicon
+            doc.title = cloakData.title;
+            let link = doc.createElement('link');
+            link.rel = 'icon';
+            link.href = cloakData.icon;
+            doc.head.appendChild(link);
+            
+            // Embed Null_X into the about:blank tab seamlessly
+            let iframe = doc.createElement('iframe');
+            iframe.src = window.location.href; // This loads your actual site inside the iframe
+            iframe.style.width = '100vw';
+            iframe.style.height = '100vh';
+            iframe.style.border = 'none';
+            iframe.style.margin = '0';
+            iframe.style.padding = '0';
+            
+            doc.body.style.margin = '0';
+            doc.body.style.overflow = 'hidden'; 
+            doc.body.appendChild(iframe);
         }
     </script>
 </body>
