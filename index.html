@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Null_X</title>
+    <link id="dynamic-favicon" rel="icon" type="image/png" href="">
     <style>
         /* General styling and background */
         body {
@@ -134,7 +135,7 @@
 
         <section id="cloak-module" class="rgb-box">
             <h2>Experimental Cloaks</h2>
-            <p>Deploy our about:blank cloaking technology. This will open a new, disguised tab masking as Google Drive.</p>
+            <p>Deploy our masking technology. This will instantly change the current tab's title and icon to disguise it as Google Drive.</p>
             <button onclick="launchCloak()">Launch Cloak</button>
         </section>
 
@@ -167,7 +168,6 @@
                     const progress = timestamp - start;
                     const percent = Math.min(progress / duration, 1);
                     
-                    // Easing function for a smooth glide
                     const ease = percent < 0.5 ? 2 * percent * percent : 1 - Math.pow(-2 * percent + 2, 2) / 2;
                     
                     window.scrollTo(0, startPosition + distance * ease);
@@ -176,46 +176,16 @@
             });
         });
 
-        // --- CLOAK LAUNCHER ---
+        // --- IN-TAB CLOAK LAUNCHER ---
         function launchCloak() {
-            // Open an about:blank tab
-            let win = window.open('about:blank', '_blank');
-            if (!win) {
-                alert("Pop-up blocked! Please allow pop-ups for this site to use the cloak.");
-                return;
+            // Change the tab title
+            document.title = "Google Drive";
+            
+            // Swap the favicon to the Google Drive icon
+            let favicon = document.getElementById("dynamic-favicon");
+            if (favicon) {
+                favicon.href = "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
             }
-            
-            let doc = win.document;
-            
-            // Set the disguised title
-            doc.title = "Google Drive";
-            
-            // Set the disguised favicon (Google Drive logo)
-            let link = doc.createElement('link');
-            link.rel = 'icon';
-            link.href = 'https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png';
-            doc.head.appendChild(link);
-            
-            // Create the iframe to load the content
-            let iframe = doc.createElement('iframe');
-            
-            // NOTE: Google Drive blocks being embedded, so it may show an error. 
-            // You can replace this URL with your own game link or site later.
-            iframe.src = 'https://drive.google.com'; 
-            
-            // Make the iframe take up the whole screen seamlessly
-            iframe.style.width = '100vw';
-            iframe.style.height = '100vh';
-            iframe.style.border = 'none';
-            iframe.style.margin = '0';
-            iframe.style.padding = '0';
-            
-            // Remove margins from the new tab's body
-            doc.body.style.margin = '0';
-            doc.body.style.overflow = 'hidden'; 
-            
-            // Inject the iframe into the disguised tab
-            doc.body.appendChild(iframe);
         }
     </script>
 </body>
